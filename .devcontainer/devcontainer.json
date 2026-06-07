@@ -1,0 +1,30 @@
+{
+  "name": "Python 3 & Claude Code Dev",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "..",
+    "args": {
+      "LLM_MODEL": "${localEnv:LLM_MODEL:claude}",
+      "LLM_API_KEY": "${localEnv:LLM_API_KEY:}",
+      "LLM_API_ENDPOINT": "${localEnv:LLM_API_ENDPOINT:}"
+    }
+  },
+  "containerEnv": {
+    "LLM_MODEL": "${localEnv:LLM_MODEL:claude}",
+    "LLM_API_KEY": "${localEnv:LLM_API_KEY:}",
+    "LLM_API_ENDPOINT": "${localEnv:LLM_API_ENDPOINT:}"
+  },
+  "mounts": [
+    // Claude 세션 및 인증 정보 유지를 위한 로컬 볼륨 마운트
+    "source=${localEnv:HOME}/.anthropic,target=/root/.anthropic,type=bind,consistency=cached"
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",       // Python 공식 확장 프로그램
+        "ms-python.vscode-pylance" // 코드 인텔리전스
+      ]
+    }
+  },
+  "remoteUser": "root"
+}
